@@ -18,6 +18,9 @@ angular.module('siwtngbp').factory('RestFactory', [
     restFactory.getRestBaseUrl = function () {
       return restBaseUrl;
     };
+    restFactory.activateApi = function () {
+      return http.get(restBaseUrl + '/utility/activate', null);
+    };
     restFactory.createAuthentication = function () {
       return http.post(restBaseUrl + '/authentications', null);
     };

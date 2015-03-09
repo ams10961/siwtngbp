@@ -19,10 +19,16 @@ angular.module('siwtngbp').factory('RestFactory', ['$injector', function($inject
         restBaseUrl = 'https://siwtapi-ams10961.rhcloud.com/v1';
         log.debug('remote REST services');
     }
+   
 
     /* create guest session */
     restFactory.getRestBaseUrl = function () {
         return restBaseUrl;
+    };
+    
+    /* create guest session */
+    restFactory.activateApi = function () {
+        return http.get(restBaseUrl + '/utility/activate', null);
     };
 
     /* create guest session */
