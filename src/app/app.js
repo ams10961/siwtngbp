@@ -34,18 +34,22 @@ angular.module( 'siwtngbp', [
      * - redirect from twitter callback
      * - page reload
      */
-    
-    log.debug('activating api');
-    RestFactory.activateApi()
-    .success(function (validatedSession, status, headers, config) {
-        log.debug('api active');
-    })
-    .error(function (error, status, headers, config) {
-        sessionStorage.httpStatus = status;
-        $state.go('httperror');
-    });
-    
 
+    /* make sure API is active - often passivated if not used*/
+    if (!sessionStorage.apiActive) {
+        log.debug('activating api');
+        RestFactory.activateApi()
+        .success(function (validatedSession, status, headers, config) {
+            log.debug('api active');
+            sessionStorage.apiActive = true;
+        })
+        .error(function (error, status, headers, config) {
+            sessionStorage.httpStatus = status;
+            $state.go('httperror');
+        });
+    }
+
+    /* check if a session object exists */
     if (sessionStorage.session) {
         if (sessionStorage.oauthCallback) {
             log.debug ("one-time skipping of session validation during oauth callback");
